@@ -7,11 +7,16 @@ CORS(app)
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return 'hello world'
 
 @app.route('/members')
 def members():
     return {"members":["M1","M2"]}
+
+@app.route('/test')
+def test():
+    return {"members":['안녕하세요', '테스트 중 입니다.']}
+
 
 if __name__ == "__main__":
     app.run(debug=True)
