@@ -1,3 +1,4 @@
 /driver
 csv_prep.py
 crawler_j.ipynb
+*.tar.gz
