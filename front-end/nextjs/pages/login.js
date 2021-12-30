@@ -1,11 +1,71 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 import 'semantic-ui-css/semantic.min.css';
 import HeaderNav from '../components/HeaderNav';
-import { Button, Form, Input, Message } from 'semantic-ui-react';
+import { Button, Form, Input, Message, Icon, Label } from 'semantic-ui-react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 	const router = useRouter();
+
+	const [message, setMessage] = useState('');
+	// 변수명을 지을땐 동사+명사로 지으면 제일 깔끔
+	const [isError, setisError] = useState('none');
+	const [user, setUser] = useState({
+		id: '',
+		password: '',
+	});
+	const onChangeAction = useCallback(
+		(e) => {
+			const { name, value } = e.target;
+			setUser({ ...user, [name]: value });
+		},
+		[user, setUser],
+	);
+	const onSubmitAction = (e) => {
+		if (user.id === '' || user.password === '') {
+			setMessage('아이디, 비밀번호를 모두 입력해주세요.');
+			setisError('inline-block');
+			return false;
+		}
+
+		setisError('none');
+		postLogin(user);
+	};
+
+	const postLogin = async (user) => {
+		axios
+			.post('http://127.0.0.1:5000/login', user)
+			.then(({ data }) => {
+				if (data !== 'fail') {
+					setisError('none');
+					localStorage.setItem('userName', JSON.stringify(data));
+					router.push('/');
+					toast.configure();
+					toast.success(`${data}님 안녕하세요 😀`, {
+						theme: 'dark',
+						position: 'top-center',
+						autoClose: 3000,
+						hideProgressBar: true,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
+
+				if (data === 'fail') {
+					setMessage('아이디 또는 비밀번호가 잘못 입력 되었습니다.');
+					setisError('inline-block');
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	const wrapper = {
 		display: 'flex',
 		justifyContent: 'center',
@@ -27,6 +87,11 @@ const Login = () => {
 		textAlign: 'center',
 	};
 
+	const aaa = (isError) => {
+		marginBottom: '5px';
+		display: isError;
+	};
+
 	return (
 		<div>
 			<HeaderNav />
@@ -34,18 +99,46 @@ const Login = () => {
 				<div style={mainDiv}>
 					<Message color="black" icon="sign-in" header="로그인" />
 					<Form>
-						<label>아이디</label>
-						<Form.Field control={Input} placeholder="ID" />
-						<label>비밀번호</label>
-						<Form.Field control={Input} placeholder="Password" />
+						<label>ID</label>&nbsp;&nbsp;&nbsp;
+						<Label
+							circular
+							color="red"
+							horizontal
+							style={{ display: isError, marginBottom: '5px' }}
+							// style={aaa(isError)}
+						>
+							&nbsp;
+							<Icon name="warning" /> {message}
+						</Label>
+						<Form.Field
+							name="id"
+							control={Input}
+							onChange={onChangeAction}
+							value={user.id}
+							placeholder="ID를 입력해주세요"
+						/>
+						<label>Password</label>
+						<Form.Input
+							name="password"
+							onChange={onChangeAction}
+							value={user.password}
+							type="password"
+							placeholder="Password를 입력해주세요"
+						/>
 					</Form>
 					<br />
 					<div style={btnArea}>
-						<Button inverted color="grey">
-							ID/PW 찾기
-						</Button>
-						<Button inverted color="grey">
-							로그인
+						<Button
+							inverted
+							color="grey"
+							animated
+							type="submit"
+							onClick={onSubmitAction}
+						>
+							<Button.Content visible>로그인</Button.Content>
+							<Button.Content hidden>
+								<Icon name="arrow right" />
+							</Button.Content>
 						</Button>
 					</div>
 				</div>
