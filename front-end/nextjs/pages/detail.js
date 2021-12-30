@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Index = () => {
+const Detail = () => {
 	const router = useRouter();
 	return (
 		<div>
@@ -14,4 +14,4 @@ const Index = () => {
 	);
 };
 
-export default Index;
+export default Detail;

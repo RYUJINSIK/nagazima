@@ -39,12 +39,16 @@ const Login = () => {
 		axios
 			.post('http://127.0.0.1:5000/login', user)
 			.then(({ data }) => {
+				console.log(data);
+				console.log(data.name);
+				console.log(data.token);
 				if (data !== 'fail') {
 					setisError('none');
-					localStorage.setItem('userName', JSON.stringify(data));
+					localStorage.setItem('userName', JSON.stringify(data.name));
+					localStorage.setItem('token', JSON.stringify(data.token));
 					router.push('/');
 					toast.configure();
-					toast.success(`${data}님 안녕하세요 😀`, {
+					toast.success(`${data.name}님 안녕하세요 😀`, {
 						theme: 'dark',
 						position: 'top-center',
 						autoClose: 3000,
@@ -88,8 +92,10 @@ const Login = () => {
 	};
 
 	const aaa = (isError) => {
-		marginBottom: '5px';
-		display: isError;
+		return {
+			marginBottom: '5px',
+			display: isError,
+		};
 	};
 
 	return (
@@ -104,8 +110,8 @@ const Login = () => {
 							circular
 							color="red"
 							horizontal
-							style={{ display: isError, marginBottom: '5px' }}
-							// style={aaa(isError)}
+							// style={{ display: isError, marginBottom: '5px' }}
+							style={aaa(isError)}
 						>
 							&nbsp;
 							<Icon name="warning" /> {message}

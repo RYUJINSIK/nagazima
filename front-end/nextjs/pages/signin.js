@@ -56,25 +56,31 @@ const Signin = () => {
 				errorPassword: 'none',
 				errorName: 'none',
 			});
-		} else {
-			if (!regCheck(isMail, user.id)) {
-				setMessage('적합하지 않은 이메일 형식입니다.');
-				setIsError({
-					...isError,
-					errorId: 'inline-block',
-					errorPassword: 'none',
-					errorName: 'none',
-				});
-				return false;
-			} else {
-				setIsError({
-					...isError,
-					errorId: 'none',
-					errorPassword: 'none',
-					errorName: 'none',
-				});
-				idChk(user.id);
-			}
+
+			return;
+		}
+
+		if (!regCheck(isMail, user.id)) {
+			setMessage('적합하지 않은 이메일 형식입니다.');
+			setIsError({
+				...isError,
+				errorId: 'inline-block',
+				errorPassword: 'none',
+				errorName: 'none',
+			});
+			return;
+		}
+
+		setIsError({
+			...isError,
+			errorId: 'none',
+			errorPassword: 'none',
+			errorName: 'none',
+		});
+
+		// 중복 ID 검증 로직
+		const isDuplicateId = idChk(user.id);
+		if (isDuplicateId) {
 		}
 	};
 
@@ -87,7 +93,7 @@ const Signin = () => {
 				errorPassword: 'none',
 				errorName: 'none',
 			});
-			return false;
+			return;
 		}
 		if (user.password != user.passwordCheck) {
 			setMessage('비밀번호가 일치하지않습니다 !');
@@ -97,7 +103,7 @@ const Signin = () => {
 				errorPassword: 'inline-block',
 				errorName: 'none',
 			});
-			return false;
+			return;
 		}
 
 		if (!regCheck(isKorEng, user.name)) {
@@ -108,7 +114,7 @@ const Signin = () => {
 				errorPassword: 'none',
 				errorName: 'inline-block',
 			});
-			return false;
+			return;
 		}
 
 		if (!regCheck(isMail, user.id)) {
@@ -119,7 +125,7 @@ const Signin = () => {
 				errorPassword: 'none',
 				errorName: 'none',
 			});
-			return false;
+			return;
 		}
 
 		if (
@@ -135,7 +141,7 @@ const Signin = () => {
 				errorPassword: 'inline-block',
 				errorName: 'none',
 			});
-			return false;
+			return;
 		}
 
 		setIsError({
@@ -178,14 +184,16 @@ const Signin = () => {
 			});
 	};
 
+	// output : return data, if error : return err
 	const idChk = async (id) => {
-		axios
+		return axios
 			.post('http://127.0.0.1:5000/idchk', { id: id })
 			.then(({ data }) => {
-				console.log(data);
+				if (data.isDuplicateId) return true;
+				return false;
 			})
 			.catch((err) => {
-				console.log(err);
+				return err;
 			});
 	};
 
