@@ -7,7 +7,7 @@ conn = pymysql.connect(host='localhost',
                        db='nagagima',
                        charset='utf8')
 
-sql = '''CREATE TABLE user123 (
+sql = '''CREATE TABLE user (
         id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
         user_id varchar(50) NOT NULL UNIQUE,
         user_pw varchar(100) NOT NULL,
