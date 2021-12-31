@@ -45,3 +45,18 @@ class User_record(db.Model):
 
     user_id = db.Column(db.String(45), primary_key=True, nullable=False, unique=True)
     file_path = db.Column(db.String(100))
+
+class Movies(db.Model):
+
+    __tablename__ = 'movies'
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    title = db.Column(db.String(300), nullable=False)
+    type = db.Column(db.String(10), nullable=False)
+    open_year = db.Column(db.Integer, nullable=False)
+    rate = db.Column(db.Numeric(precision=2, scale=1), nullable=False)
+    running_time = db.Column(db.String(10), nullable=False)
+    genre1 = db.Column(db.String(10), nullable=False)
+    genre2 = db.Column(db.String(10))
+    genre3 = db.Column(db.String(10))
+    summary = db.Column(db.Text, nullable=False)

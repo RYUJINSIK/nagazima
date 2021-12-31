@@ -21,7 +21,7 @@ with open('data/movies.csv', 'r', encoding='utf-8-sig') as data:
         # print(line)
         # print(line[0])
         
-        # id = line[0]
+        id = line[0]
         title = line[1]
         type = line[2]
         open_year = line[3]
@@ -30,8 +30,6 @@ with open('data/movies.csv', 'r', encoding='utf-8-sig') as data:
         genre1 = line[6]
         genre2 = line[7]
         genre3 = line[8]
-        actor = line[9]
-        director = line[10]
         summary = line[11]
 
 
@@ -40,8 +38,8 @@ with open('data/movies.csv', 'r', encoding='utf-8-sig') as data:
         if i == 20:
             break
 
-        sql = '''INSERT INTO movies(title, type, open_year, rate, running_time, genre1, genre2, genre3, actor, director, summary) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
-        cur.execute(sql, (title, type, open_year, rate, running_time, genre1, genre2, genre3, actor, director, summary))
+        sql = '''INSERT INTO movies(id,title, type, open_year, rate, running_time, genre1, genre2, genre3, summary) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+        cur.execute(sql, (id,title, type, open_year, rate, running_time, genre1, genre2, genre3, summary))
 
     conn.commit()
     conn.close()        

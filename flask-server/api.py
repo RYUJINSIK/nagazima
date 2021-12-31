@@ -1,6 +1,6 @@
 from flask import Flask,Blueprint, json, render_template, redirect, jsonify, request, session, g, current_app
 from db_connect import db
-from models import User
+from models import User, Movies
 from flask_bcrypt import Bcrypt
 import jwt
 
@@ -109,3 +109,29 @@ def logout():
         return '로그아웃'
     except:
         return '로그아웃 실패??'
+
+
+#영화 상세페이지
+@nagagima.route('/detail', methods=['POST'])
+def detail():
+    data = request.json
+    movie_id = data['movie_id']
+    movie_id = int(movie_id)
+    
+    movie = Movies.query.filter(Movies.id == movie_id).first() 
+    
+    id = movie.id
+    title = movie.title
+    type = movie.type
+    open_year = movie.open_year
+    rate = movie.rate
+    running_time = movie.running_time
+    genre1 = movie.genre1
+    genre2 = movie.genre2
+    genre3 = movie.genre3
+    summary = movie.summary
+
+    return jsonify({'id':id, 'title':title, 'type':type, 'open_year':open_year, 
+    'rate':rate, 'running_time':running_time, 'genre1':genre1, 'genre2': genre2, 
+    'genre3':genre3, 'summary':summary })
+

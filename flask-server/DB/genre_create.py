@@ -8,7 +8,7 @@ conn = pymysql.connect(host='127.0.0.1',
                        charset='utf8')
 
 sql = '''CREATE TABLE genre (
-        id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        id int(11) NOT NULL PRIMARY KEY,
         genre varchar(15) NOT NULL
     ) 
     '''

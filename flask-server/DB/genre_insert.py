@@ -17,11 +17,11 @@ with open('data/genre.csv', 'r', encoding='utf-8') as data:
     next(rd) #첫행 넘기기
     
     for line in rd:
-
+        id = line[0]
         genre = line[1]
 
-        sql = '''INSERT INTO genre(genre) VALUES(%s)'''
-        cur.execute(sql, (genre))
+        sql = '''INSERT INTO genre(id, genre) VALUES(%s, %s)'''
+        cur.execute(sql, (id,genre))
 
     conn.commit()
     conn.close()        
