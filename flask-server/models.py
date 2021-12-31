@@ -7,14 +7,12 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     name = db.Column(db.String(15), nullable=False)
-    nickname = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.String(45), nullable=False, unique=True)
     user_pw = db.Column(db.String(45), nullable=False)
     img_path = db.Column(db.String(100)) 
 
-    def __init__(self, name, nickname, user_id, user_pw):
+    def __init__(self, name, user_id, user_pw):
         self.name = name
-        self.nickname = nickname
         self.user_id = user_id
         self.user_pw = user_pw
     

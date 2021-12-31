@@ -13,7 +13,8 @@ CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:93990@127.0.0.1:3307/nagagima"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = 'asodfajsdofijac'
+app.secret_key = 'asodfajsdofijacsasaddd'
+app.config['JWT_SECRET_KEY'] = 'your_secret_key_for_jwtklkl'
 
 db.init_app(app)
 bcrypt = Bcrypt(app)
