@@ -1,8 +1,9 @@
 from flask import Flask,Blueprint, json, render_template, redirect, jsonify, request, session, g, current_app
 from db_connect import db
-from models import User, Movies
+from models import *
 from flask_bcrypt import Bcrypt
 import jwt
+import random
 
 app = Flask(__name__)
 nagagima = Blueprint('nagagima',__name__)
@@ -15,6 +16,17 @@ header = {
 }
 
 algorithm = 'HS256'
+
+def keyword(movie_id):
+    keywords=[]
+    genre = Movies_and_Genre.query.filter(Movies_and_Genre.movie_id == movie_id).all()
+    for id in genre:
+        keyword = Genre_and_Keyword.query.filter(Genre_and_Keyword.genre_id == id.genre_id).all()
+        for key in keyword:
+            keywords.append(key.keyword)
+
+    return keywords
+
 
 
 @nagagima.route('/', methods=['GET','POST'])
@@ -36,6 +48,8 @@ def start():
 
 @nagagima.route('/test', methods=['GET'])
 def test():
+    genre = Movies_and_Genre.query.filter(Movies_and_Genre.movie_id == 0).all()
+    print(genre)
     return "test.,,,"
 
 #회원가입
@@ -119,7 +133,7 @@ def detail():
     movie_id = int(movie_id)
     
     movie = Movies.query.filter(Movies.id == movie_id).first() 
-    
+
     id = movie.id
     title = movie.title
     type = movie.type
@@ -131,7 +145,23 @@ def detail():
     genre3 = movie.genre3
     summary = movie.summary
 
-    return jsonify({'id':id, 'title':title, 'type':type, 'open_year':open_year, 
+    keywords = keyword(movie_id)
+    rannum = random.sample(range(0,len(keywords)),3)
+
+    # keywords=[]
+    # genre = Movies_and_Genre.query.filter(Movies_and_Genre.movie_id == movie_id).all()
+    # for id in genre:
+    #     keyword = Genre_and_Keyword.query.filter(Genre_and_Keyword.genre_id == id.genre_id).all()
+    #     for key in keyword:
+    #         keywords.append(key.keyword)
+    
+    # rannum = random.sample(range(0,len(keywords)),3)
+
+    # print(keywords[rannum[0]])
+    
+    return json.dumps({'id':id, 'title':title, 'type':type, 'open_year':open_year, 
     'rate':rate, 'running_time':running_time, 'genre1':genre1, 'genre2': genre2, 
-    'genre3':genre3, 'summary':summary })
+    'genre3':genre3, 'summary':summary, 'keyword1':keywords[rannum[0]], 
+    'keyword2': keywords[rannum[1]], 'keyword3': keywords[rannum[2]]})
+
 

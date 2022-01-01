@@ -60,3 +60,26 @@ class Movies(db.Model):
     genre2 = db.Column(db.String(10))
     genre3 = db.Column(db.String(10))
     summary = db.Column(db.Text, nullable=False)
+
+class Genre(db.Model):
+
+    __tablename__ = 'genre'
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    genre = db.Column(db.String(15), nullable=False)
+
+class Movies_and_Genre(db.Model):
+    
+    __tablename__ = 'movies_and_genre'
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    movie_id = db.Column(db.Integer, nullable=False)
+    genre_id = db.Column(db.Integer, nullable=False)
+
+class Genre_and_Keyword(db.Model):
+    
+    __tablename__ = 'genre_and_keyword'
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True) 
+    genre_id = db.Column(db.Integer, nullable=False)
+    keyword = db.Column(db.String(30), nullable=False)

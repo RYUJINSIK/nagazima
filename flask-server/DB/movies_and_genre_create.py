@@ -8,6 +8,7 @@ conn = pymysql.connect(host='127.0.0.1',
                        charset='utf8')
 
 sql = '''CREATE TABLE movies_and_genre (
+        id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
         movie_id int(11) NOT NULL,
         genre_id int(11) NOT NULL
     ) 
