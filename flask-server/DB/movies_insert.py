@@ -32,12 +32,6 @@ with open('data/movies.csv', 'r', encoding='utf-8-sig') as data:
         genre3 = line[8]
         summary = line[11]
 
-
-
-        i += 1
-        if i == 20:
-            break
-
         sql = '''INSERT INTO movies(id,title, type, open_year, rate, running_time, genre1, genre2, genre3, summary) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
         cur.execute(sql, (id,title, type, open_year, rate, running_time, genre1, genre2, genre3, summary))
 

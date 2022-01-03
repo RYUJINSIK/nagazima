@@ -12,11 +12,11 @@ sql = '''CREATE TABLE movies (
         title varchar(300) NOT NULL,
         type varchar(10) NOT NULL,
         open_year int(11) NOT NULL,
-        rate float(2,1) NOT NULL,
-        running_time varchar(10) NOT NULL,
-        genre1 varchar(10) NOT NULL,
-        genre2 varchar(10),
-        genre3 varchar(10),
+        rate varchar(5) NOT NULL,
+        running_time varchar(50) NOT NULL,
+        genre1 varchar(20) NOT NULL,
+        genre2 varchar(20),
+        genre3 varchar(20),
         summary text NOT NULL
     ) 
     '''

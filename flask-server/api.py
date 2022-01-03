@@ -1,5 +1,6 @@
 from flask import Flask,Blueprint, json, render_template, redirect, jsonify, request, session, g, current_app
 from db_connect import db
+from werkzeug.utils import secure_filename
 from models import *
 from flask_bcrypt import Bcrypt
 import jwt
@@ -17,15 +18,28 @@ header = {
 
 algorithm = 'HS256'
 
-def keyword(movie_id):
+def keywordFind(movie_id):
     keywords=[]
     genre = Movies_and_Genre.query.filter(Movies_and_Genre.movie_id == movie_id).all()
     for id in genre:
-        keyword = Genre_and_Keyword.query.filter(Genre_and_Keyword.genre_id == id.genre_id).all()
-        for key in keyword:
+        keyword_id = Genre_and_Keyword.query.filter(Genre_and_Keyword.genre_id == id.genre_id).all()
+        for id in keyword_id:
+            key = Keyword.query.filter(Keyword.id == id.keyword_id).first()
             keywords.append(key.keyword)
 
     return keywords
+
+def recommand(keyword):
+    movies = []
+    keyword_id = Keyword.query.filter(Keyword.keyword == keyword).first()
+    genre_keyword = Genre_and_Keyword.query.filter(Genre_and_Keyword.keyword_id == keyword_id.id).first()
+
+    movie_genre = Movies_and_Genre.query.filter(Movies_and_Genre.genre_id == genre_keyword.genre_id).all()
+    for movie_list in movie_genre:
+        movie = Movies.query.filter(Movies.id == movie_list.movie_id).first()
+        movies.append(movie.title)
+
+    return movies
 
 
 
@@ -42,15 +56,44 @@ def start():
 
         d = jwt.decode(token, secret_key, algorithm)
         
-        print(d)
-        
         return jsonify({'result':d})
 
 @nagagima.route('/test', methods=['GET'])
 def test():
     genre = Movies_and_Genre.query.filter(Movies_and_Genre.movie_id == 0).all()
     print(genre)
+
+    
     return "test.,,,"
+
+#메인페이지 키워드 10개 보내주기
+@nagagima.route('/main', methods=['POST'])
+def main():
+    keywords = []
+    keyword_num = Keyword.query.count()
+    rannum = random.sample(range(0,keyword_num),10)
+    for i in rannum:
+        key = Keyword.query.filter(Keyword.id == i).first()
+        keywords.append(key.keyword)
+
+    return jsonify(keywords)
+
+@nagagima.route('/select', methods=['GET'])
+def select():
+    #키워드 프론트에서 받아와야 함// 받아오기 전 테스트 중 
+    keywords = ['노래', '인공지능', '가상', '개그']
+    
+    movie1 = recommand(keywords[0])
+    movie2 = recommand(keywords[1])
+
+    movies = movie1 + movie2
+
+    rannum = random.sample(range(0,len(movies)),10)
+
+    for i in rannum:
+        print(movies[i])
+    
+    return 'ok'
 
 #회원가입
 @nagagima.route('/signin', methods=['POST'])
@@ -145,7 +188,7 @@ def detail():
     genre3 = movie.genre3
     summary = movie.summary
 
-    keywords = keyword(movie_id)
+    keywords = keywordFind(movie_id)
     rannum = random.sample(range(0,len(keywords)),3)
 
     # keywords=[]
@@ -159,9 +202,7 @@ def detail():
 
     # print(keywords[rannum[0]])
     
-    return json.dumps({'id':id, 'title':title, 'type':type, 'open_year':open_year, 
+    return jsonify({'id':id, 'title':title, 'type':type, 'open_year':open_year, 
     'rate':rate, 'running_time':running_time, 'genre1':genre1, 'genre2': genre2, 
     'genre3':genre3, 'summary':summary, 'keyword1':keywords[rannum[0]], 
     'keyword2': keywords[rannum[1]], 'keyword3': keywords[rannum[2]]})
-
-
