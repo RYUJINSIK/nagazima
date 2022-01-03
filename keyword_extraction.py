@@ -1,5 +1,3 @@
-import numpy as np 
-import pandas as pd 
 import re
 from konlpy.tag import Mecab
 from hanspell import spell_checker
@@ -32,7 +30,6 @@ class Preprocessing:
             if pos in FEATURE_POS:
                 words.append(word)
 
-        # total_words = ' '.join(words)
         return words
     
     def run(self):
