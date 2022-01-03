@@ -1,3 +1,19 @@
 /driver
+/mecab-0.996-ko-0.9.2
+/mecab-ko-dic-2.1.1-20180720
+/mecab-python-0.996
+
 csv_prep.py
-crawler_j.ipynb
+
+시청기록 전처리.ipynb
+위키백과 크롤링.ipynb
+저스트와치 크롤링.ipynb
+
+keyword_for_genre.ipynb
+kr_wordrank.ipynb
+krwordrank_word_and_keyword_extraction.ipynb
+
+*.tar.gz
+2016-10-20.txt
+
+kor_text_preprocessing.ipynb
