@@ -4,7 +4,14 @@
 /mecab-python-0.996
 
 csv_prep.py
+
+시청기록 전처리.ipynb
+위키백과 크롤링.ipynb
 저스트와치 크롤링.ipynb
+
+keyword_for_genre.ipynb
+kr_wordrank.ipynb
+krwordrank_word_and_keyword_extraction.ipynb
 
 *.tar.gz
 2016-10-20.txt
