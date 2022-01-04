@@ -39,42 +39,50 @@ const HeaderForm = () => {
 		height: '35px',
 	};
 	return (
-		<Menu inverted>
-			<Menu.Item header>
-				<img
-					src="/images/title33.png"
-					style={titleImg}
-					value="home"
-					id="homeImg"
-					onClick={onClickAction}
-				/>
-			</Menu.Item>
-
-			<Menu.Menu position="right">
-				<Menu.Item key="info" name="info" value="info" onClick={onClickAction}>
-					서비스소개
+		<>
+			<Menu inverted>
+				<Menu.Item header>
+					<img
+						src="/images/title33.png"
+						style={titleImg}
+						value="home"
+						id="homeImg"
+						onClick={onClickAction}
+					/>
 				</Menu.Item>
-				{loginUser ? (
-					<>
-						<Menu.Item key="mypage" name="mypage" onClick={onClickAction}>
-							마이페이지
-						</Menu.Item>
-						<Menu.Item key="logout" name="logout" onClick={onClickAction}>
-							로그아웃
-						</Menu.Item>
-					</>
-				) : (
-					<>
-						<Menu.Item key="signin" name="signin" onClick={onClickAction}>
-							회원가입
-						</Menu.Item>
-						<Menu.Item key="login" name="login" onClick={onClickAction}>
-							로그인
-						</Menu.Item>
-					</>
-				)}
-			</Menu.Menu>
-		</Menu>
+
+				<Menu.Menu position="right">
+					<Menu.Item
+						key="info"
+						name="info"
+						value="info"
+						onClick={onClickAction}
+					>
+						서비스소개
+					</Menu.Item>
+					{loginUser ? (
+						<>
+							<Menu.Item key="mypage" name="mypage" onClick={onClickAction}>
+								마이페이지
+							</Menu.Item>
+							<Menu.Item key="logout" name="logout" onClick={onClickAction}>
+								로그아웃
+							</Menu.Item>
+						</>
+					) : (
+						<>
+							<Menu.Item key="signin" name="signin" onClick={onClickAction}>
+								회원가입
+							</Menu.Item>
+							<Menu.Item key="login" name="login" onClick={onClickAction}>
+								로그인
+							</Menu.Item>
+						</>
+					)}
+				</Menu.Menu>
+			</Menu>
+			<hr></hr>
+		</>
 	);
 };
 
