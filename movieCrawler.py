@@ -39,6 +39,8 @@ doScrollDown(60)
 
 for i in range(num):
     try:
+        imgUrl = driver.find_elements_by_css_selector(".picture-comp__img")[i].get_attribute("src")
+        
         element = driver.find_elements_by_css_selector(".title-poster")[i]
         driver.execute_script("arguments[0].click();", element)
         
@@ -48,7 +50,6 @@ for i in range(num):
         actors = []
         
         title = driver.find_element_by_xpath('//*[@id="base"]/div[2]/div/div[2]/div[2]/div[1]/div[1]/div/h1').text
-        imgUrl = driver.find_element_by_xpath('//*[@id="base"]/div[2]/div/div[1]/div/aside/div[1]/div[1]/picture/img').get_attribute("src")
         
         open_year = driver.find_element_by_css_selector(".text-muted").text
         open_year = open_year.strip().replace("(","").replace(")","")
@@ -101,9 +102,6 @@ for i in range(num):
         
         df = pd.DataFrame(movie_datas, columns=columns)
         df.to_csv('tv_data.csv', encoding='utf-8')
-        
-        title = ""
-        imgUrl = ""
         
         driver.back()
     
