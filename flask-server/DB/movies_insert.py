@@ -27,13 +27,13 @@ with open('data/movies.csv', 'r', encoding='utf-8-sig') as data:
         open_year = line[3]
         rate = line[4]
         running_time = line[5]
-        genre1 = line[6]
-        genre2 = line[7]
-        genre3 = line[8]
+        genre_1 = line[6]
+        genre_2 = line[7]
+        genre_3 = line[8]
         summary = line[11]
 
-        sql = '''INSERT INTO movies(id,title, type, open_year, rate, running_time, genre1, genre2, genre3, summary) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
-        cur.execute(sql, (id,title, type, open_year, rate, running_time, genre1, genre2, genre3, summary))
+        sql = '''INSERT INTO movies(id,title, type, open_year, rate, running_time, genre_1, genre_2, genre_3, summary) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+        cur.execute(sql, (id,title, type, open_year, rate, running_time, genre_1, genre_2, genre_3, summary))
 
     conn.commit()
     conn.close()        
