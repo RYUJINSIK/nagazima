@@ -31,3 +31,4 @@ yarn-error.log*
 
 # 포스터 이미지 ignore
 /public/images/posters
+ 

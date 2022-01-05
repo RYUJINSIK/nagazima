@@ -27,6 +27,7 @@ const HeaderForm = () => {
 	};
 
 	useEffect(() => {
+		// get serverside props 메소드 알아보기 , window 사용 X (SSR 공부)
 		if (typeof window !== 'undefined') {
 			const userName = localStorage.getItem('userName');
 			setLoginUser(userName);

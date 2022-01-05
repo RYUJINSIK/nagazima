@@ -35,18 +35,24 @@ const Login = () => {
 		postLogin(user);
 	};
 
+	const setAuthInfo = (name, token) => {
+		localStorage.setItem('userName', JSON.stringify(name));
+		localStorage.setItem('token', JSON.stringify(token));
+	};
+	// async 필요 X
+	// .env 파일 API_URL
 	const postLogin = async (user) => {
 		axios
 			.post('http://127.0.0.1:5000/login', user)
+
+			// .post(`${process.env.API_URL}/login`, user)
 			.then(({ data }) => {
-				console.log(data);
-				console.log(data.name);
-				console.log(data.token);
 				if (data !== 'fail') {
 					setisError('none');
-					localStorage.setItem('userName', JSON.stringify(data.name));
-					localStorage.setItem('token', JSON.stringify(data.token));
+					// setAuthInfo 함수 구현
+					setAuthInfo(data.name, data.token);
 					router.push('/');
+					// showToast 함수 구현
 					toast.configure();
 					toast.success(`${data.name}님 안녕하세요 😀`, {
 						theme: 'dark',

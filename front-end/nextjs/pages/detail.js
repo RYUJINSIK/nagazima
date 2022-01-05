@@ -5,7 +5,7 @@ import HeaderNav from '../components/HeaderNav';
 import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Grid, Rating, Label } from 'semantic-ui-react';
+import { Grid, Rating, Label, Button, Icon } from 'semantic-ui-react';
 
 const Detail = () => {
 	// FIXME:
@@ -13,6 +13,8 @@ const Detail = () => {
 	// 2. 키워드 추출
 	// 3. 이미지 TITLE 수정
 	const router = useRouter();
+	const movie_id = router.asPath.replace('/detail?id=', '');
+
 	const [movieData, setData] = useState([]);
 	const [poster, setPoster] = useState('');
 	let colorSet = [
@@ -32,9 +34,12 @@ const Detail = () => {
 
 	useEffect(() => {
 		axios
-			.post('http://127.0.0.1:5000/detail', { movie_id: '0' })
+			.get('http://127.0.0.1:5000/detail', {
+				params: {
+					movie_id,
+				},
+			})
 			.then(({ data }) => {
-				console.log(data);
 				setData(data);
 			})
 			.catch((err) => {
@@ -43,7 +48,6 @@ const Detail = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(movieData.title);
 		setPoster(`/images/posters/${movieData.title}.jpg`);
 	}, [movieData]);
 
@@ -81,6 +85,16 @@ const Detail = () => {
 			<div style={wrapper}>
 				<div style={mainDiv}>
 					<Grid>
+						<Button
+							size="large"
+							color="red"
+							floated="left"
+							style={{ marginBottom: '5px' }}
+						>
+							<Icon name="checkmark" />
+							뒤로가기
+						</Button>
+						<br />
 						<Grid.Row>
 							<Grid.Column width={5}>
 								<img

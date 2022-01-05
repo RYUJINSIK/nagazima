@@ -1,21 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/bundle';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/pagination';
-
-// import Swiper core and required modules
-import SwiperCore, { EffectCoverflow, Pagination } from 'swiper';
-
+import React, { useState, useEffect } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import HeaderNav from '../components/HeaderNav';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { Button, Label, Icon, Message, Segment, Grid } from 'semantic-ui-react';
-
-// install Swiper modules
-SwiperCore.use([EffectCoverflow, Pagination]);
 
 const Index = () => {
 	const router = useRouter();
@@ -47,7 +35,7 @@ const Index = () => {
 
 	useEffect(() => {
 		axios
-			.get('http://127.0.0.1:5000/main')
+			.post('http://127.0.0.1:5000/main')
 			.then(({ data }) => {
 				setKeyword(data);
 				setSelectedOne('');
@@ -83,7 +71,11 @@ const Index = () => {
 		one: 'inline-block',
 		two: 'inline-block',
 	});
+
 	const selectKeyword = (e) => {
+		let a = null;
+		let b = null;
+
 		if (selectedOne === '') {
 			setColorOne(e.target.name);
 			setSelectedOne(e.target.innerText);
@@ -95,22 +87,20 @@ const Index = () => {
 				...viewExample,
 				one: 'none',
 			});
-		} else {
-			setColorTwo(e.target.name);
-			setSelectedTwo(e.target.innerText);
-			setViewSelect({
-				...viewSelect,
-				two: 'inline-block',
-			});
-			setViewExample({
-				...viewExample,
-				two: 'none',
-			});
-		}
-	};
 
-	const goDetailPage = (e) => {
-		router.push(`/detail?id=${e.target.id}`);
+			return;
+		}
+
+		setColorTwo(e.target.name);
+		setSelectedTwo(e.target.innerText);
+		setViewSelect({
+			...viewSelect,
+			two: 'inline-block',
+		});
+		setViewExample({
+			...viewExample,
+			two: 'none',
+		});
 	};
 
 	const deleteKeyword = (e) => {
@@ -139,11 +129,9 @@ const Index = () => {
 
 	const getMovieData = () => {
 		axios
-			.get('http://127.0.0.1:5000/select', {
-				params: {
-					keyword1: selectedOne,
-					keyword2: selectedTwo,
-				},
+			.post('http://127.0.0.1:5000/select ', {
+				keyword1: selectedOne,
+				keyword2: selectedTwo,
 			})
 			.then(({ data }) => {
 				console.log(data);
@@ -343,39 +331,29 @@ const Index = () => {
 							</Label>
 							&nbsp; 에 대한 추천결과입니다 !
 						</h1>
-						<Swiper
-							effect={'coverflow'}
-							grabCursor={true}
-							centeredSlides={true}
-							slidesPerView={'3'}
-							coverflowEffect={{
-								rotate: 50,
-								stretch: 0,
-								depth: 100,
-								modifier: 1,
-								slideShadows: true,
-							}}
-							pagination={true}
-							className="mySwiper"
-						>
-							{movie.length &&
-								movie.map((data, index) => {
-									let poster = `/images/posters/${data[1]}.jpg`;
-									return (
-										<SwiperSlide>
-											<img
-												src={poster}
-												style={{
-													paddingBottom: '20px',
-													paddingTop: '20px',
-												}}
-												onClick={goDetailPage}
-												id={data[0]}
-											/>
-										</SwiperSlide>
-									);
-								})}
-						</Swiper>
+						<Grid>
+							<Grid.Row>
+								{movie.length &&
+									movie.map((data, index) => {
+										let poster = `/images/posters/${data[1]}.jpg`;
+										return (
+											<>
+												<Grid.Column width={3}>
+													<img
+														src={poster}
+														style={{
+															paddingBottom: '20px',
+															paddingTop: '20px',
+														}}
+														value={data[0]}
+														id={data[0]}
+													/>
+												</Grid.Column>
+											</>
+										);
+									})}
+							</Grid.Row>
+						</Grid>
 					</div>
 				</div>
 			</div>
