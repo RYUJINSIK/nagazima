@@ -8,21 +8,19 @@ const HeaderForm = () => {
 
 	const onClickAction = (e) => {
 		if (e.target.id === 'homeImg') {
-			router.push('/');
+			router.push('/main');
 		}
 		if (e.target.outerText === '서비스소개') {
 			console.log('서비스소개');
+			router.push('/info');
 		}
-		if (e.target.outerText === '회원가입') {
-			router.push('/signin');
+		if (e.target.outerText === '서비스배경') {
+			console.log('서비스소개');
+			router.push('/info');
 		}
-		if (e.target.outerText === '로그인') {
-			router.push('/login');
-		}
-		if (e.target.outerText === '로그아웃') {
-			localStorage.clear();
-			setLoginUser('');
-			router.push('/');
+		if (e.target.outerText === '시청기록분석') {
+			console.log('서비스소개');
+			router.push('/analysis');
 		}
 	};
 
@@ -40,7 +38,13 @@ const HeaderForm = () => {
 		height: '35px',
 	};
 	return (
-		<>
+		<div
+			style={{
+				paddingTop: '30px',
+				paddingLeft: '30px',
+				paddingRight: '30px',
+			}}
+		>
 			<Menu inverted>
 				<Menu.Item header>
 					<img
@@ -61,29 +65,16 @@ const HeaderForm = () => {
 					>
 						서비스소개
 					</Menu.Item>
-					{loginUser ? (
-						<>
-							<Menu.Item key="mypage" name="mypage" onClick={onClickAction}>
-								마이페이지
-							</Menu.Item>
-							<Menu.Item key="logout" name="logout" onClick={onClickAction}>
-								로그아웃
-							</Menu.Item>
-						</>
-					) : (
-						<>
-							<Menu.Item key="signin" name="signin" onClick={onClickAction}>
-								회원가입
-							</Menu.Item>
-							<Menu.Item key="login" name="login" onClick={onClickAction}>
-								로그인
-							</Menu.Item>
-						</>
-					)}
+					<Menu.Item key="back" name="back" onClick={onClickAction}>
+						서비스배경
+					</Menu.Item>
+					<Menu.Item key="analysis" name="analysis" onClick={onClickAction}>
+						시청기록분석
+					</Menu.Item>
 				</Menu.Menu>
 			</Menu>
-			<hr></hr>
-		</>
+			<hr style={{ borderColor: '#2D2E2F' }}></hr>
+		</div>
 	);
 };
 
