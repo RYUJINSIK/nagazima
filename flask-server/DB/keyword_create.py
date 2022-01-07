@@ -9,7 +9,7 @@ conn = pymysql.connect(host='127.0.0.1',
 
 sql = '''CREATE TABLE keyword (
         id int(11) NOT NULL PRIMARY KEY,
-        keyword varchar(30) NOT NULL
+        keyword varchar(20) NOT NULL
     ) 
     '''
 

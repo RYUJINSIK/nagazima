@@ -27,9 +27,9 @@ class Movies(db.Model):
     open_year = db.Column(db.Integer, nullable=False)
     rate = db.Column(db.String(5), nullable=False)
     running_time = db.Column(db.String(50), nullable=False)
-    genre1 = db.Column(db.String(10), nullable=False)
-    genre2 = db.Column(db.String(10))
-    genre3 = db.Column(db.String(10))
+    genre_1 = db.Column(db.String(10), nullable=False)
+    genre_2 = db.Column(db.String(10))
+    genre_3 = db.Column(db.String(10))
     summary = db.Column(db.Text, nullable=False)
 
 class Genre(db.Model):
@@ -47,18 +47,18 @@ class MoviesAndGenre(db.Model):
     movie_id = db.Column(db.Integer, nullable=False)
     genre_id = db.Column(db.Integer, nullable=False)
 
-class GenreAndKeyword(db.Model):
-    
-    __tablename__ = 'genre_and_keyword'
-
-    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True) 
-    genre_id = db.Column(db.Integer, nullable=False)
-    keyword_id = db.Column(db.Integer, nullable=False)
-
 class Keyword(db.Model):
     
     __tablename__ = 'keyword'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     keyword = db.Column(db.String(30), nullable=False)
+
+class KeywordAndMovie(db.Model):
+
+    __tablename__ = 'keyword_and_movie'
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    keyword_id = db.Column(db.Integer, nullable=False)
+    movie_id = db.Column(db.Integer, nullable=False)
 

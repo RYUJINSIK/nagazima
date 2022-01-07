@@ -11,7 +11,7 @@ conn = pymysql.connect(host='127.0.0.1',
 cur = conn.cursor()
 conn.commit()
 #파일 실행 위치 확인 후 위치 변경해야 할 수 도 있음
-with open('data/movies_and_genre.csv', 'r', encoding='utf-8') as data:
+with open('data/movie_genre.csv', 'r', encoding='utf-8') as data:
 
     rd = csv.reader(data)
     next(rd) #첫행 넘기기

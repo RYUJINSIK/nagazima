@@ -7,9 +7,9 @@ conn = pymysql.connect(host='127.0.0.1',
                        db='nagagima',
                        charset='utf8')
 
-sql = '''CREATE TABLE genre_and_keyword (
+sql = '''CREATE TABLE keyword_and_movie (
         id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-        genre_id int(11) NOT NULL,
+        movie_id int(11) NOT NULL,
         keyword_id int(11) NOT NULL
     ) 
     '''

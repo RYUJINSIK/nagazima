@@ -14,9 +14,9 @@ sql = '''CREATE TABLE movies (
         open_year int(11) NOT NULL,
         rate varchar(5) NOT NULL,
         running_time varchar(50) NOT NULL,
-        genre1 varchar(20) NOT NULL,
-        genre2 varchar(20),
-        genre3 varchar(20),
+        genre_1 varchar(20) NOT NULL,
+        genre_2 varchar(20),
+        genre_3 varchar(20),
         summary text NOT NULL
     ) 
     '''
