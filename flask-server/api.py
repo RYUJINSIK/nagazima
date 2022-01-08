@@ -9,7 +9,7 @@ from WatchHistoryAnalysis import *
 
 
 app = Flask(__name__)
-nagagima = Blueprint('nagagima',__name__)
+nagagima = Blueprint('nagagima',__name__, url_prefix='/api')
 # , url_prefix='/api'
 
 def keyword_find(movie_id): #영화 상세페이지에 키워드 보내주기 
