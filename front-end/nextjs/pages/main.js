@@ -252,7 +252,7 @@ const Index = () => {
 					<br />
 					<div style={mainDiv}>
 						<h1 style={{ textAlign: 'center' }}>
-							관심있는 키워드 2가지를 선택해주세요
+							관심있는 키워드 혹은 장르 2가지를 선택해주세요
 							<Button
 								floated="right"
 								compact
