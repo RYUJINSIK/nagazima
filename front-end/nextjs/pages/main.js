@@ -466,13 +466,13 @@ const Index = () => {
 													</Grid.Column>
 													<Grid.Column width={12}>
 														<h3>
-															<Rating
+															{/* <Rating
 																defaultRating={4}
 																maxRating={5}
 																size="large"
 																icon="star"
 																disabled
-															/>
+															/> */}
 															{movieData.rate}
 														</h3>
 													</Grid.Column>

@@ -31,6 +31,7 @@ const Analysis = () => {
 	const [actor, setActor] = useState([]);
 	const [type, setType] = useState([]);
 	const [ratio, setRatio] = useState([]);
+	const [isError, setIsError] = useState('none');
 	const [mainArticle, setMainArticle] = useState('inline-block');
 	const [visibleChart, setVisibleChart] = useState({
 		chart_1: 'none',
@@ -69,6 +70,7 @@ const Analysis = () => {
 
 			.catch((err) => {
 				console.log(err);
+				setIsError('inline-block');
 				setLoading('none');
 			});
 	};
@@ -396,6 +398,16 @@ const Analysis = () => {
 						<Button size="huge" color="red" onClick={onClickSubmit}>
 							분석하기
 						</Button>
+						<br />
+						<Label
+							basic
+							color="red"
+							size="large"
+							pointing
+							style={{ display: isError }}
+						>
+							올바른 시청기록 파일이 아닙니다 !
+						</Label>
 						<div style={{ display: loading }}>
 							<Dimmer active>
 								<Loader size="massive">시청기록 분석중</Loader>
