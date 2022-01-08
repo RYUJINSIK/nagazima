@@ -3,7 +3,16 @@ import 'semantic-ui-css/semantic.min.css';
 import axios from 'axios';
 import HeaderNav from '../components/HeaderNav';
 import { useRouter } from 'next/router';
-import { Dimmer, Loader, Button, Label, Grid } from 'semantic-ui-react';
+import {
+	Dimmer,
+	Loader,
+	Button,
+	Label,
+	Grid,
+	Step,
+	Popup,
+	Icon,
+} from 'semantic-ui-react';
 import CSVReader from 'react-csv-reader';
 
 import HighchartsReact from 'highcharts-react-official';
@@ -22,6 +31,7 @@ const Analysis = () => {
 	const [actor, setActor] = useState([]);
 	const [type, setType] = useState([]);
 	const [ratio, setRatio] = useState([]);
+	const [mainArticle, setMainArticle] = useState('inline-block');
 	const [visibleChart, setVisibleChart] = useState({
 		chart_1: 'none',
 		chart_2: 'none',
@@ -41,12 +51,13 @@ const Analysis = () => {
 
 	const getData = () => {
 		axios
-			.post('http://127.0.0.1:5000/analysis', {
+			.post('http://127.0.0.1:5000/api/analysis', {
 				watchData,
 			})
 			.then(({ data }) => {
 				chartSetting(data);
 				setLoading('none');
+				setMainArticle('none');
 				setVisibleChart({
 					...visibleChart,
 					chart_1: 'inline-block',
@@ -268,11 +279,11 @@ const Analysis = () => {
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
-		minHeight: '50vh',
+		minHeight: '10vh',
 	};
 
 	const mainDiv = {
-		marginTop: '50px',
+		marginTop: '20px',
 		padding: '30px 30px 30px 30px',
 		width: '1300px',
 		// border: '1px solid #9e9e9e',
@@ -301,32 +312,98 @@ const Analysis = () => {
 			<HeaderNav />
 			<div style={wrapper}>
 				<div style={mainDiv}>
-					<Button size="huge" color="orange">
-						<CSVReader
-							label={'파일 업로드'}
-							inputStyle={fileLabel}
-							ref={logoImgInput}
-							onFileLoaded={(data, fileInfo, originalFile) =>
-								fileSet(data, fileInfo, originalFile)
+					<div style={{ display: mainArticle }}>
+						<h1>
+							여러분의{' '}
+							<p style={{ color: 'red', display: 'inline' }}>NETFLIX</p>{' '}
+							시청기록을 분석해드립니다.
+						</h1>
+						<br />
+						<img src="/images/analysis.svg" style={{ width: '400px' }} />
+						<br />
+						<br />
+						<Popup
+							pinned
+							on="click"
+							position="bottom center"
+							content={
+								<Step.Group vertical>
+									<Step style={{ display: 'flex', flexDirection: 'column' }}>
+										<Step.Content>
+											<Step.Title>
+												<h1>1. 로그인 후 계정 탭 클릭</h1>
+											</Step.Title>
+											<Step.Description>
+												<img
+													style={{ width: '300px' }}
+													src="/images/step1.png"
+												/>
+											</Step.Description>
+										</Step.Content>
+									</Step>
+
+									<Step>
+										<Step.Content>
+											<Step.Title>
+												<h1>2. 시청기록 클릭</h1>
+											</Step.Title>
+											<Step.Description>
+												<img
+													style={{ width: '700px' }}
+													src="/images/step2.png"
+												/>
+											</Step.Description>
+										</Step.Content>
+									</Step>
+
+									<Step>
+										<Step.Content>
+											<Step.Title>
+												<h1>3. 시청기록 다운로드</h1>
+											</Step.Title>
+											<Step.Description>
+												<img
+													style={{ width: '700px' }}
+													src="/images/step3.png"
+												/>
+											</Step.Description>
+										</Step.Content>
+									</Step>
+								</Step.Group>
+							}
+							trigger={
+								<Button color="black">
+									<Icon name="pin" />
+									시청기록 데이터 다운로드 방법
+								</Button>
 							}
 						/>
-					</Button>
-					<Label size="huge" color="black">
-						{fileName}
-					</Label>
-
-					<Button size="huge" color="red" onClick={onClickSubmit}>
-						분석하기
-					</Button>
-					<div style={{ display: loading }}>
-						<Dimmer active>
-							<Loader size="massive">시청기록 분석중</Loader>
-						</Dimmer>
+						<br />
+						<br />
+						<Button size="huge" color="orange">
+							<CSVReader
+								label={'파일 업로드'}
+								inputStyle={fileLabel}
+								ref={logoImgInput}
+								onFileLoaded={(data, fileInfo, originalFile) =>
+									fileSet(data, fileInfo, originalFile)
+								}
+							/>
+						</Button>
+						<Label size="huge" color="black">
+							{fileName}
+						</Label>
+						<Button size="huge" color="red" onClick={onClickSubmit}>
+							분석하기
+						</Button>
+						<div style={{ display: loading }}>
+							<Dimmer active>
+								<Loader size="massive">시청기록 분석중</Loader>
+							</Dimmer>
+						</div>
 					</div>
-
 					<br />
 					<br />
-
 					<Grid style={{ display: visibleChart.chart_1 }}>
 						<Grid.Row>
 							<Grid.Column width={13}>
@@ -356,7 +433,6 @@ const Analysis = () => {
 							</Grid.Column>
 						</Grid.Row>
 					</Grid>
-
 					<Grid style={{ display: visibleChart.chart_2 }}>
 						<Grid.Row>
 							<Grid.Column width={13}>
@@ -386,7 +462,6 @@ const Analysis = () => {
 							</Grid.Column>
 						</Grid.Row>
 					</Grid>
-
 					<Grid style={{ display: visibleChart.chart_3 }}>
 						<Grid.Row>
 							<Grid.Column width={13}>
@@ -416,7 +491,6 @@ const Analysis = () => {
 							</Grid.Column>
 						</Grid.Row>
 					</Grid>
-
 					<Grid style={{ display: visibleChart.chart_4 }}>
 						<Grid.Row>
 							<Grid.Column width={13}>

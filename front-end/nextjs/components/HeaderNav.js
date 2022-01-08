@@ -8,13 +8,16 @@ const HeaderForm = () => {
 
 	const onClickAction = (e) => {
 		if (e.target.id === 'homeImg') {
-			router.push('/main');
+			let link = document.location.href;
+			let domain = link.slice(-4);
+
+			if (domain === 'main') {
+				location.reload();
+			} else {
+				router.push('/main');
+			}
 		}
 		if (e.target.outerText === '서비스소개') {
-			console.log('서비스소개');
-			router.push('/info');
-		}
-		if (e.target.outerText === '서비스배경') {
 			console.log('서비스소개');
 			router.push('/info');
 		}
@@ -64,9 +67,6 @@ const HeaderForm = () => {
 						onClick={onClickAction}
 					>
 						서비스소개
-					</Menu.Item>
-					<Menu.Item key="back" name="back" onClick={onClickAction}>
-						서비스배경
 					</Menu.Item>
 					<Menu.Item key="analysis" name="analysis" onClick={onClickAction}>
 						시청기록분석

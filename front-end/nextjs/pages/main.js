@@ -75,7 +75,7 @@ const Index = () => {
 
 	const getData = () => {
 		axios
-			.get('http://127.0.0.1:5000/main')
+			.get('http://127.0.0.1:5000/api/main')
 			.then(({ data }) => {
 				keywordSetting(data);
 			})
@@ -122,12 +122,13 @@ const Index = () => {
 
 	const getDetailPage = (movie_id) => {
 		axios
-			.get('http://127.0.0.1:5000/detail', {
+			.get('http://127.0.0.1:5000/api/detail', {
 				params: {
 					movie_id,
 				},
 			})
 			.then(({ data }) => {
+				console.log(data);
 				setData(data);
 			})
 			.catch((err) => {
@@ -166,13 +167,14 @@ const Index = () => {
 		}
 
 		axios
-			.get('http://127.0.0.1:5000/select', {
+			.get('http://127.0.0.1:5000/api/select', {
 				params: {
 					keyword1: selectedOne,
 					keyword2: selectedTwo,
 				},
 			})
 			.then(({ data }) => {
+				console.log(data);
 				setMovie(data);
 				getDetailPage(data[0][0]);
 			})
@@ -426,13 +428,10 @@ const Index = () => {
 												movie.map((data) => (
 													<SwiperSlide>
 														<img
-															src={`/images/posters/${data[1]}.jpg`}
+															src={`/images/posters/${data[0]}.jpg`}
 															style={{
 																paddingBottom: '20px',
 																paddingTop: '20px',
-															}}
-															onClick={() => {
-																getDetailPage(data[0]);
 															}}
 															id={data[0]}
 														/>

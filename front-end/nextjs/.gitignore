@@ -29,6 +29,4 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# 포스터 이미지 ignore
-/public/images/posters
  

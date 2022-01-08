@@ -30,6 +30,7 @@ body::-webkit-scrollbar {
 	/* display: flex; */
 	justify-content: center;
 	align-items: center;
+	padding: 50px;
 }
 
 .divider {
@@ -75,15 +76,16 @@ video {
 	width: 100%;
 }
 .main-text p {
-	font-family: -apple-system, Stylish-Regular, sans-serif !important;
+	/* font-family: -apple-system, Stylish-Regular, sans-serif !important; */
 	margin-top: -24px;
 	text-align: left;
 	font-size: 48px;
+	text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 	color: #ffffff;
 }
 
-@font-face {
+/* @font-face {
 	font-family: 'Stylish-Regular';
 	font-weight: 200;
 	src: url('/fonts/Stylish-Regular.ttf') format('truetype');
-}
+} */

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import 'semantic-ui-css/semantic.min.css';
 import HeaderNav from '../components/HeaderNav';
 import { useRef } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Button, Label, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 
 import HighchartsReact from 'highcharts-react-official';
@@ -10,6 +11,7 @@ import Highcharts from 'highcharts/highstock';
 import { Animated } from 'react-animated-css';
 
 const Info = () => {
+	const router = useRouter();
 	const [chartOne, setChartOne] = useState([]);
 	const [chartTwo2019, setChartTwo2019] = useState([]);
 	const [chartTwo2020, setChartTwo2020] = useState([]);
@@ -18,7 +20,7 @@ const Info = () => {
 
 	useEffect(() => {
 		axios
-			.get('http://127.0.0.1:5000/data')
+			.get('http://127.0.0.1:5000/api/data')
 			.then(({ data }) => {
 				console.log(data);
 				setChartOne(data.covid19_data);
@@ -32,6 +34,9 @@ const Info = () => {
 			});
 	}, []);
 
+	const goMainPage = () => {
+		router.push('/main');
+	};
 	const Chart1 = {
 		chart: {
 			backgroundColor: '#00ff0000',
@@ -308,26 +313,27 @@ const Info = () => {
 								<br />
 								<HighchartsReact highcharts={Highcharts} options={Chart1} />
 							</Grid.Column>
-							<Grid.Column width={7}>
+							<Grid.Column
+								width={7}
+								style={{ paddingLeft: '40px', textAlign: 'center' }}
+							>
+								<br />
+								<br />
 								<Animated
 									animationIn="fadeInUp"
 									animationInDuration={3000}
 									isVisible={true}
 								>
-									<h1>갈수록 증가하는 코로나 환자 수 !</h1>
+									<h1>
+										갈수록 증가하는 <br />
+										코로나 확진자 수 !
+									</h1>
 								</Animated>
 
-								<Animated
-									animationIn="fadeInUp"
-									animationInDelay={5000}
-									animationInDuration={3000}
-									isVisible={true}
-								>
-									<img
-										src="/images/abc.svg"
-										style={{ width: '300px', height: '300px' }}
-									/>
-								</Animated>
+								<img
+									src="/images/covid.svg"
+									style={{ width: '300px', height: '300px' }}
+								/>
 							</Grid.Column>
 						</Grid.Row>
 					</Grid>
@@ -338,7 +344,25 @@ const Info = () => {
 					<br />
 					<Grid>
 						<Grid.Row>
-							<Grid.Column width={7}></Grid.Column>
+							<Grid.Column width={7} style={{ textAlign: 'center' }}>
+								<br />
+								<br />
+								<Animated
+									animationIn="fadeInUp"
+									animationInDuration={3000}
+									isVisible={true}
+								>
+									<h1>
+										확진자가 증가함으로써, <br />
+										집에 머무는 시간이 많아지는 요즘
+									</h1>
+								</Animated>
+
+								<img
+									src="/images/stay.svg"
+									style={{ width: '300px', height: '300px' }}
+								/>
+							</Grid.Column>
 							<Grid.Column width={9}>
 								<br />
 								<br />
@@ -349,25 +373,67 @@ const Info = () => {
 				</div>
 				<div className="divider"></div>
 				<div className="inner third-page">
+					<br />
+					<br />
 					<Grid>
-						<Grid.Row>
-							<Grid.Column width={4}>
+						<Grid.Row style={{ textAlign: 'center', paddingLeft: '40px' }}>
+							<Grid.Column width={5}>
 								<br />
 								<br />
-								<HighchartsReact highcharts={Highcharts} options={Chart3} />
+								<img
+									src="/images/movie1.svg"
+									style={{ width: '300px', height: '300px' }}
+								/>
 							</Grid.Column>
-							<Grid.Column width={4}>
+							<Grid.Column width={5}>
 								<br />
 								<br />
-								<HighchartsReact highcharts={Highcharts} options={Chart4} />
+								<h1>
+									바깥 출입을 꺼리는{' '}
+									<p
+										style={{
+											color: 'red',
+											display: 'inline',
+											fontSize: '40px',
+										}}
+									>
+										'집콕족'
+									</p>
+									을 위한 넷플릭스 컨텐츠 추천받기
+								</h1>
+								<br />
+								<br />
+								<Label color="black" size="large">
+									<Icon name="arrow circle down" />
+									추천받으러가기
+								</Label>
+								<br />
+								<Button
+									compact
+									size="massive"
+									color="black"
+									style={{ border: '1px solid #fff' }}
+									onClick={goMainPage}
+								>
+									<img
+										src="/images/mini_title.png"
+										value="posterImg"
+										id="posterImg"
+										onClick={goMainPage}
+									/>
+								</Button>
+								<br />
 							</Grid.Column>
-							<Grid.Column width={8}></Grid.Column>
+							<Grid.Column width={5}>
+								<br />
+								<br />
+								<img
+									src="/images/movie2.svg"
+									style={{ width: '300px', height: '300px' }}
+								/>
+							</Grid.Column>
 						</Grid.Row>
 					</Grid>
-				</div>
-				<div className="divider"></div>
-				<div className="inner fourth-page">
-					<h1>4444</h1>
 				</div>
 			</div>
 		</>
