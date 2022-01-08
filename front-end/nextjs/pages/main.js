@@ -17,8 +17,8 @@ import {
 	Button,
 	Label,
 	Icon,
-	Message,
-	Segment,
+	Dimmer,
+	Loader,
 	Grid,
 	Rating,
 } from 'semantic-ui-react';
@@ -31,6 +31,7 @@ const Index = () => {
 	const [movie, setMovie] = useState([]);
 	const [keyword, setKeyword] = useState([]);
 	const [movieData, setData] = useState([]);
+	const [loading, setLoading] = useState('inline-block');
 	const [isError, setIsError] = useState('none');
 	let colorSet = [
 		'red',
@@ -78,9 +79,11 @@ const Index = () => {
 			.get('http://127.0.0.1:5000/api/main')
 			.then(({ data }) => {
 				keywordSetting(data);
+				setLoading('none');
 			})
 			.catch((err) => {
 				console.log(err);
+				setLoading('none');
 			});
 	};
 
@@ -240,6 +243,11 @@ const Index = () => {
 			<div>
 				<HeaderNav />
 				<div style={wrapper}>
+					<div style={{ display: loading }}>
+						<Dimmer active>
+							<Loader size="massive">데이터 세팅중</Loader>
+						</Dimmer>
+					</div>
 					{/* <img src="/images/title33.png" value="home" id="homeImg" /> */}
 					<br />
 					<div style={mainDiv}>
