@@ -76,7 +76,9 @@ const Index = () => {
 
 	const getData = () => {
 		axios
-			.get('http://127.0.0.1:5000/api/main')
+			.get(
+				'http://elice-kdt-3rd-team-07.koreacentral.cloudapp.azure.com/api/main',
+			)
 			.then(({ data }) => {
 				keywordSetting(data);
 				setLoading('none');
