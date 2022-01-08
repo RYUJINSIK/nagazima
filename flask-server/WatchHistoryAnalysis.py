@@ -67,7 +67,7 @@ def count_by_actor(merge_df):
         except:
             continue
 
-    # actor_list = [i for i in actor_list if i not in '']
+    actor_list = [i for i in actor_list if i not in '']
     top10_actor = Counter(actor_list).most_common(10)
 
     return top10_actor
