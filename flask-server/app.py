@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.register_blueprint(nagagima)
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:93990@127.0.0.1:3307/nagagima"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:93990@localhost:3306/nagagima"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 tree = elemTree.parse('keys.xml')
