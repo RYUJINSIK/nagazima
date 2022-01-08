@@ -18,10 +18,10 @@ with open('data/keyword_movie.csv', 'r', encoding='utf-8') as data:
     
     for line in rd:
         movie_id = line[0]
-        keyword_id = line[1]
+        keyword = line[1]
 
-        sql = '''INSERT INTO keyword_and_movie(movie_id, keyword_id) VALUES(%s, %s)'''
-        cur.execute(sql, (movie_id, keyword_id))
+        sql = '''INSERT INTO keyword_and_movie(movie_id, keyword) VALUES(%s, %s)'''
+        cur.execute(sql, (movie_id, keyword))
 
     conn.commit()
     conn.close()        

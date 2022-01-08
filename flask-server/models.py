@@ -59,6 +59,6 @@ class KeywordAndMovie(db.Model):
     __tablename__ = 'keyword_and_movie'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    keyword_id = db.Column(db.Integer, nullable=False)
+    keyword = db.Column(db.String(20), nullable=False)
     movie_id = db.Column(db.Integer, nullable=False)
 

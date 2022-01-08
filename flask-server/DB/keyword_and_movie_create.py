@@ -10,7 +10,7 @@ conn = pymysql.connect(host='127.0.0.1',
 sql = '''CREATE TABLE keyword_and_movie (
         id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
         movie_id int(11) NOT NULL,
-        keyword_id int(11) NOT NULL
+        keyword varchar(20) NOT NULL
     ) 
     '''
 

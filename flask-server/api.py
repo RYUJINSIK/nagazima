@@ -15,24 +15,22 @@ nagagima = Blueprint('nagagima',__name__, url_prefix='/api')
 def keyword_find(movie_id): #영화 상세페이지에 키워드 보내주기 
     keywords=[]
     
-    keyword_id = KeywordAndMovie.query.filter(KeywordAndMovie.movie_id == movie_id).all()
+    keyword = KeywordAndMovie.query.filter(KeywordAndMovie.movie_id == movie_id).all()
 
-    for id in keyword_id:
-        key = Keyword.query.filter(Keyword.id == id.keyword_id).first()
-        keywords.append(key.keyword)
+    for key in keyword:
+        k = key.keyword
+        keywords.append(k)
 
     return keywords
 
 def recommand_keyword(keyword): 
     movies = []
-    keyword_id = Keyword.query.filter(Keyword.keyword == keyword).first()
-    print(keyword_id)
-    movie_id = KeywordAndMovie.query.filter(KeywordAndMovie.keyword_id == keyword_id.id).all()
-    print(movie_id)
+
+    keys = KeywordAndMovie.query.filter(KeywordAndMovie.keyword == keyword).all()
+    
+    for k in keys:
+        movie = Movies.query.filter(Movies.id == k.movie_id).first()
         
-    for movie_list in movie_id:
-        movie = Movies.query.filter(Movies.id == movie_list.movie_id).first()
-        print(movie.id, movie.title)
         movies.append([movie.id, movie.title])
 
     return movies
@@ -40,17 +38,13 @@ def recommand_keyword(keyword):
 def recommand_genre(keyword):
     movies = []
     genre_id = Genre.query.filter(Genre.genre == keyword).first()
-    print(genre_id)
+    
     genre_movie = MoviesAndGenre.query.filter(MoviesAndGenre.genre_id == genre_id.id).all()
-    print(genre_movie)
+    
     for movie_list in genre_movie:
         movie = Movies.query.filter(Movies.id == movie_list.movie_id).first()
-        if movie is None:
-            print(movie_list.movie_id)
-            continue
-        else:
-            print(movie.id, movie.title)
-            movies.append([movie.id, movie.title])
+        
+        movies.append([movie.id, movie.title])
     
     return movies
 
@@ -68,7 +62,7 @@ def main():
     keyword_num = Keyword.query.count()
     genre_num = Genre.query.count()
     rannum_1 = random.sample(range(0,keyword_num),7)
-    rannum_2 = random.sample([0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17],3)
+    rannum_2 = random.sample(range(0, genre_num),3)
 
     for i in rannum_1:
         key = Keyword.query.filter(Keyword.id == i).first()
@@ -85,14 +79,14 @@ def main():
 def select():
 
     keyword_1 = request.args.get('keyword1')
-    print(keyword_1)
+    
     keyword_2 = request.args.get('keyword2')
-    print(keyword_2)
+    
 
     check_1 = Keyword.query.filter(Keyword.keyword == keyword_1).first()
-    print(check_1)
+    
     check_2 = Keyword.query.filter(Keyword.keyword == keyword_2).first()
-    print(check_2)
+    
 
     if check_1 is not None and check_2 is not None:
         movie_1 = recommand_keyword(keyword_1)
@@ -150,15 +144,27 @@ def detail():
     genre3 = movie.genre_3
     summary = movie.summary
 
+    rannum = []
     keywords = keyword_find(movie_id)
-    rannum = random.sample(range(0,len(keywords)),3)
+    if len(keywords) > 3:
+        rannum = random.sample(range(0,len(keywords)),3)
+    else:
+        for i in range(len(keywords)):
+            rannum.append(i)
     
+
+    keyword_list = []
+
+    for i in rannum:
+        keyword_list.append(keywords[i])
+
+    print(keyword_list)
+
     return jsonify({'id':id, 'title':title, 'type':type, 'open_year':open_year, 
     'rate':rate, 'running_time':running_time, 'genre1':genre1, 'genre2': genre2, 
-    'genre3':genre3, 'summary':summary, 'keyword1':keywords[rannum[0]], 
-    'keyword2': keywords[rannum[1]], 'keyword3': keywords[rannum[2]]})
+    'genre3':genre3, 'summary':summary, 'keywords': keyword_list})
 
-
+ 
 @nagagima.route('/data', methods=['GET'])
 def data():
     with open('data/COVID19_montly.csv', 'r', encoding='utf-8-sig') as f1:
@@ -204,7 +210,6 @@ def data():
 @nagagima.route('/analysis', methods=['POST'])
 def analysis():
     data = request.json
-    print(data)
 
     #시청기록분석
     # try:
