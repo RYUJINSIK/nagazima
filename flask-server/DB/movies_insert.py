@@ -18,7 +18,6 @@ with open('data/contents.csv', 'r', encoding='utf-8-sig') as data:
     
     for line in rd:
         
-        
         id = line[1]
         title = line[2]
         type = line[3]

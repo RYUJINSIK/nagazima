@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from collections import Counter
-# from googletrans import Translator
+
 
 def trans_df(input_data):
     csv_name = list(input_data.keys())[0]
@@ -44,7 +44,7 @@ def count_by_date(data):
     today = datetime.today().date()
     before_one_year = pd.to_datetime(today - relativedelta(years=1))
 
-    recent_year_data = data[data['Date']<= before_one_year]
+    recent_year_data = data[data['Date']>= before_one_year]
     recent_year_grp = recent_year_data.groupby(['Date'])['Title'].count()
 
     date_list = []
@@ -66,7 +66,8 @@ def count_by_actor(merge_df):
             actor_list += merge_df.actor[i].split(', ')
         except:
             continue
-    
+
+    # actor_list = [i for i in actor_list if i not in '']
     top10_actor = Counter(actor_list).most_common(10)
 
     return top10_actor
@@ -77,29 +78,4 @@ def count_by_type(merge_df):
     TV_Show_rate = round(grp[1]/(grp[0]+grp[1]), 2) * 100
     return [int(movie_rate), int(TV_Show_rate)]
 
-# if __name__ == "__main__":
-#     data = pd.read_csv("raw_data/NetflixViewingHistory.csv")
-
-#     try:
-#         # data = trans_df(data))
-#         prep_data = prep_df(data)
-#         contents = pd.read_csv("data/content_no_Korean.csv")
-#         merge_df = pd.merge(contents, prep_data, left_on='title', right_on='Title', how='inner')
-
-#         # 최근 1년 간 일일 시청 횟수
-#         date, viewing_cnt = count_by_date(prep_data)
-#         print(date, viewing_cnt)
-
-#         # 장르별 시청 횟수
-#         genre, genre_cnt = count_by_genre(merge_df)
-#         print(genre, genre_cnt)
-#         # 시청 배우 top 10
-#         actor_cnt = count_by_actor(merge_df)
-#         print(actor_cnt)
-
-#         # Movie vs Tv 비중
-#         movie_rate, TV_Show_rate = count_by_type(data)
-#         print(movie_rate, TV_Show_rate)
-#     except:
-#         print("에러 메세지입니다. 넷플릭스 시청기록을 넣어주세요.")
     
