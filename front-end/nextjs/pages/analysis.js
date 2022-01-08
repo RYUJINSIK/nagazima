@@ -52,7 +52,7 @@ const Analysis = () => {
 
 	const getData = () => {
 		axios
-			.post('http://127.0.0.1:5000/api/analysis', {
+			.post(`${process.env.NEXT_PUBLIC_URL}/api/analysis`, {
 				watchData,
 			})
 			.then(({ data }) => {

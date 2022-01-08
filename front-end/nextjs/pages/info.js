@@ -20,7 +20,7 @@ const Info = () => {
 
 	useEffect(() => {
 		axios
-			.get('http://127.0.0.1:5000/api/data')
+			.get(`${process.env.NEXT_PUBLIC_URL}/api/data`)
 			.then(({ data }) => {
 				console.log(data);
 				setChartOne(data.covid19_data);
