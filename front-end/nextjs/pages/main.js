@@ -533,24 +533,17 @@ const Index = () => {
 														<h3>키워드</h3>
 													</Grid.Column>
 													<Grid.Column width={12}>
-														<Label
-															color={colorSet[Math.floor(Math.random() * 12)]}
-															size="large"
-														>
-															{movieData.keyword1}
-														</Label>
-														<Label
-															color={colorSet[Math.floor(Math.random() * 12)]}
-															size="large"
-														>
-															{movieData.keyword2}
-														</Label>
-														<Label
-															color={colorSet[Math.floor(Math.random() * 12)]}
-															size="large"
-														>
-															{movieData.keyword3}
-														</Label>
+														{movieData.keywords &&
+															movieData.keywords.map((data) => (
+																<Label
+																	color={
+																		colorSet[Math.floor(Math.random() * 12)]
+																	}
+																	size="large"
+																>
+																	{data}
+																</Label>
+															))}
 													</Grid.Column>
 												</Grid.Row>
 											</Grid>
