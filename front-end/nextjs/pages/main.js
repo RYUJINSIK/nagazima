@@ -76,9 +76,7 @@ const Index = () => {
 
 	const getData = () => {
 		axios
-			.get(
-				'http://elice-kdt-3rd-team-07.koreacentral.cloudapp.azure.com/api/main',
-			)
+			.get(`${process.env.NEXT_PUBLIC_URL}/api/main`)
 			.then(({ data }) => {
 				keywordSetting(data);
 				setLoading('none');
@@ -127,7 +125,7 @@ const Index = () => {
 
 	const getDetailPage = (movie_id) => {
 		axios
-			.get('http://127.0.0.1:5000/api/detail', {
+			.get(`${process.env.NEXT_PUBLIC_URL}/api/detail`, {
 				params: {
 					movie_id,
 				},
@@ -172,7 +170,7 @@ const Index = () => {
 		}
 
 		axios
-			.get('http://127.0.0.1:5000/api/select', {
+			.get(`${process.env.NEXT_PUBLIC_URL}/api/select`, {
 				params: {
 					keyword1: selectedOne,
 					keyword2: selectedTwo,
